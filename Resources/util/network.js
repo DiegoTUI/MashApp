@@ -15,8 +15,8 @@ var network = new function(){
             Ti.API.info("Error occurred");
         };
         Ti.API.info("Opening connection: http://54.246.80.107/api/testapikey/fs-venue-search?ll=" + + latitude + ',' + longitude);
-        //xhr.open("GET", 'http://54.246.80.107/api/testapikey/fs-venue-search?ll=' + latitude + ',' + longitude);
-        xhr.open("GET", 'http://localhost:8080/api/testapikey/fs-venue-search?ll=' + latitude + ',' + longitude);
+        xhr.open("GET", 'http://54.246.80.107/api/testapikey/fs-venue-search?ll=' + latitude + ',' + longitude);
+        //xhr.open("GET", 'http://localhost:8080/api/testapikey/fs-venue-search?ll=' + latitude + ',' + longitude);
         xhr.send();
     };
     
