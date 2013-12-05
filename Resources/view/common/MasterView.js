@@ -21,6 +21,7 @@ function MasterView() {
 	});
 	
 	network.getVenues("44.3", "37.2", function(venues) {
+	    Ti.API.info("venues received: " + venues.venues.length);
 	    table.data = tableData;
 	});
 	

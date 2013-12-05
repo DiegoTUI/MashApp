@@ -8,8 +8,7 @@ var network = new function(){
         var xhr = Titanium.Network.createHTTPClient();
         xhr.onload = function() {
             Ti.API.info("Connection loaded. Callback: " + xhr.responseText);
-            //callback(JSON.parse(xhr.responseText));
-            callback();
+            callback(JSON.parse(xhr.responseText));
         };
         xhr.onerror = function() {
             Ti.API.info("Error occurred");
