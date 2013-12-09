@@ -1,11 +1,12 @@
 function ApplicationWindow() {
 	//declare module dependencies
 	var MasterView = require('view/common/MasterView'),
-		DetailView = require('view/common/DetailView');
+		DetailView = require('view/common/DetailView'),
+		config = require('config');
 		
 	//create object instance
 	var self = Ti.UI.createWindow({
-		title:'Products',
+		title: config.masterTitle,
 		exitOnClose:true,
 		navBarHidden:false,
 		backgroundColor:'#ffffff'
@@ -20,7 +21,7 @@ function ApplicationWindow() {
 		//create detail view container
 		var detailView = new DetailView();
 		var detailContainerWindow = Ti.UI.createWindow({
-			title:'Product Details',
+			title: config.detailsTitle,
 			navBarHidden:false,
 			backgroundColor:'#ffffff'
 		});

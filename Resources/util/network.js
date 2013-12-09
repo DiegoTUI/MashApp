@@ -2,9 +2,15 @@
 var network = new function(){
     //self reference
     var self = this;
-    
+    // config
+    var config = require('config.js');
     //get venues
     self.getVenues = function(latitude, longitude, callback){
+    	if (config.useLocalResponse) {
+    		var response = require('server/response.js').fsVenueSearchResponse;
+    		callback (response);
+    		return;
+    	}
         var xhr = Titanium.Network.createHTTPClient();
         xhr.onload = function() {
             Ti.API.info("Connection loaded. Callback: " + xhr.responseText);
@@ -13,9 +19,9 @@ var network = new function(){
         xhr.onerror = function() {
             Ti.API.info("Error occurred");
         };
-        Ti.API.info("Opening connection: http://54.246.80.107/api/testapikey/fs-venue-search?ll=" + + latitude + ',' + longitude);
-        xhr.open("GET", 'http://54.246.80.107/api/testapikey/fs-venue-search?ll=' + latitude + ',' + longitude);
-        //xhr.open("GET", 'http://localhost:8080/api/testapikey/fs-venue-search?ll=' + latitude + ',' + longitude);
+        var completeUrl = config.mashoopUrl + config.apiKey + '/fs-venue-search?ll=' + latitude + ',' + longitude;
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
         xhr.send();
     };
     

@@ -1,28 +1,18 @@
 //Master View Component Constructor
 function MasterView() {
     var network = require('util/network');
+    var FSVenueSearchParser = require('model/FSVenueSearchParser');
 	//create object instance, parasitic subclass of Observable
 	var self = Ti.UI.createView({
 		backgroundColor:'white'
 	});
 	
-	//some dummy data for our table view
-	var tableData = [
-		{title:'Apples', price:'1.25', hasChild:true, color: '#000'},
-		{title:'Grapes', price:'1.50', hasChild:true, color: '#000'},
-		{title:'Oranges', price:'2.50', hasChild:true, color: '#000'},
-		{title:'Bananas', price:'1.50', hasChild:true, color: '#000'},
-		{title:'Pears', price:'1.40', hasChild:true, color: '#000'},
-		{title:'Kiwis', price:'1.00', hasChild:true, color: '#000'}
-	];
+	var table = Ti.UI.createTableView();
 	
-	var table = Ti.UI.createTableView({
-		data:[]
-	});
-	
-	network.getVenues("44.3", "37.2", function(venues) {
-	    Ti.API.info("venues received: " + venues.venues.length);
-	    table.data = tableData;
+	network.getVenues("44.3", "37.2", function(response) {
+	    Ti.API.debug("venues received: " + response.venues.length);
+	    var fsVenueSearchParser = new FSVenueSearchParser (response);
+	    table.data = fsVenueSearchParser.tableVenues;
 	});
 	
 	self.add(table);
@@ -32,7 +22,7 @@ function MasterView() {
 	table.addEventListener('click', function(e) {
 		self.fireEvent('itemSelected', {
 			name:e.rowData.title,
-			price:e.rowData.price
+			hereNow:e.rowData.hereNow
 		});
 	});
 	
