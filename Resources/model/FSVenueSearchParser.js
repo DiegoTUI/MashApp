@@ -10,8 +10,12 @@ var FSVenueSearchParser = function (response) {
 		
 		if (isResponseValid()) {
 			response.venues.forEach (function (venue) {
-				parsedVenues.push ({title: "  " + venue.name,
+				parsedVenues.push ({title: venue.name,
 										hereNow: venue.hereNow,
+										contact: venue.contact,
+										location: venue.location,
+										categories: venue.categories,
+										stats: venue.stats,
 										hasChild: true,
 										color: '#000'});
 			});
