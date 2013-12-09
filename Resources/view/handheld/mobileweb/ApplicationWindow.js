@@ -33,7 +33,6 @@ function ApplicationWindow() {
 	
 	//add behavior for master view
 	masterView.addEventListener('itemSelected', function(e) {
-	    detailContainerWindow.title = e.title;
 		detailView.fireEvent('itemSelected',e);
 		navGroup.open(detailContainerWindow);
 	});
