@@ -48,6 +48,20 @@ var network = new function(){
         xhr.send();
     };
     
+    self.getActivities = function (city, callback) {
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.onload = function() { 
+            callback(JSON.parse(xhr.responseText));
+        };
+        xhr.onerror = function() {
+            Ti.API.info("GetActivities. Error occurred");
+        };
+        var completeUrl = config.mashoopUrl + config.apiKey + '/at-ticket-avail?destination=' +'BCN';
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
+        xhr.send();
+    };
+    
     return self;
 };
 
