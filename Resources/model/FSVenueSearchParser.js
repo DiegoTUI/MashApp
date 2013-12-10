@@ -3,14 +3,14 @@ var FSVenueSearchParser = function (response) {
 	// self reference
 	var self = this;
 	// the venues parsed
-	self.tableVenues = parseVenues();
+	self.tableItems = parseItems();
 	// the venue parser
-	function parseVenues() {
-		var parsedVenues = [];
+	function parseItems() {
+		var parsedItems = [];
 		
 		if (isResponseValid()) {
 			response.venues.forEach (function (venue) {
-				parsedVenues.push ({title: venue.name,
+				parsedItems.push ({title: venue.name,
 										hereNow: venue.hereNow,
 										contact: venue.contact,
 										location: venue.location,
@@ -21,12 +21,12 @@ var FSVenueSearchParser = function (response) {
 			});
 		}
 		
-		return parsedVenues;
+		return parsedItems;
 	}
 	// checks if the response is valid
 	function isResponseValid() {
 		var isValid = true;
-		if (typeof response['venues'] != 'object' ||
+		if (typeof response['venues'] !== 'object' ||
 			response.venues.length == 0) {
 			isValid = false;
 		}

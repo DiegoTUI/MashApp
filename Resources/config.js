@@ -9,5 +9,6 @@ module.exports.mapquestGeocodingUrl = 'http://www.mapquestapi.com/geocoding/v1/a
 // api key
 module.exports.apiKey = 'testapikey';
 // titles
-module.exports.masterTitle = 'Venues';
-module.exports.detailsTitle = 'Venue Details';
+module.exports.masterTitle = 'Hotels in BCN';
+module.exports.detailsTitle = 'Venues near your hotel';
+module.exports.venueTitle = 'Venue details';

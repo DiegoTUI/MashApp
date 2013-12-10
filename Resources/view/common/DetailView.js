@@ -1,23 +1,31 @@
+// detail view
 function DetailView() {
-	var self = Ti.UI.createView();
-	
-	var lbl = Ti.UI.createLabel({
-		text:'Please select an item',
-		height:'auto',
-		width:'auto',
-		color:'#000'
-	});
-	self.add(lbl);
-	
-	self.addEventListener('itemSelected', function(e) {
-		lbl.text = "name: " + e.title + "\n" +
-		              "contact: " + JSON.stringify(e.contact, null, "\t") + "\n" +
-		              "location: " + JSON.stringify(e.location, null, "\t") + "\n" +
-		              "categories: " + JSON.stringify(e.categories, null, "\t") + "\n" +
-		              "stats: " + JSON.stringify(e.stats, null, "\t");
-	});
-	
-	return self;
+	// requires
+    var network = require('util/network');
+    var FSVenueSearchParser = require('model/FSVenueSearchParser');
+    //create object instance, parasitic subclass of Observable
+    var self = Ti.UI.createView({
+        backgroundColor:'white'
+    });
+    // table
+    var table = Ti.UI.createTableView();
+    self.add(table);
+    // load table contents when a row has been clicked
+    self.addEventListener('itemSelectedInMaster', function (e) {
+        network.getHotelDetails(e.code, function(response) {
+            network.getVenues(response.Latitude, response.Longitude, function(response) {
+                fsVenueSearchParser = new FSVenueSearchParser (response);
+                table.data = fsVenueSearchParser.tableItems;
+            });
+        });
+    });
+    
+    //add behavior
+    table.addEventListener('click', function(e) {
+        self.fireEvent('itemSelectedInDetails', e.rowData);
+    });
+    
+    return self;
 };
 
 module.exports = DetailView;

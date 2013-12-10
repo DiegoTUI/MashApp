@@ -56,7 +56,35 @@ var network = new function(){
         xhr.onerror = function() {
             Ti.API.info("GetActivities. Error occurred");
         };
-        var completeUrl = config.mashoopUrl + config.apiKey + '/at-ticket-avail?destination=' +'BCN';
+        var completeUrl = config.mashoopUrl + config.apiKey + '/at-ticket-avail?destination=' + city;
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
+        xhr.send();
+    };
+    
+    self.getHotels = function (city, callback) {
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.onload = function() { 
+            callback(JSON.parse(xhr.responseText));
+        };
+        xhr.onerror = function() {
+            Ti.API.info("GetHotels. Error occurred");
+        };
+        var completeUrl = config.mashoopUrl + config.apiKey + '/at-hotel-list?destination=' + city;
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
+        xhr.send();
+    };
+    
+    self.getHotelDetails = function (hotelCode, callback) {
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.onload = function() { 
+            callback(JSON.parse(xhr.responseText));
+        };
+        xhr.onerror = function() {
+            Ti.API.info("GetHotels. Error occurred");
+        };
+        var completeUrl = config.mashoopUrl + config.apiKey + '/at-hotel-detail?code=' + hotelCode;
         Ti.API.info("Opening connection: " + completeUrl);
         xhr.open("GET", completeUrl);
         xhr.send();
