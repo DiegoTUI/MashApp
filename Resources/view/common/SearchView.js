@@ -13,7 +13,7 @@ function SearchView () {
         height: 28,
         left: 10,
         width: 0.75 * Ti.Platform.displayCaps.platformWidth,
-        hintText: 'address'
+        hintText: 'city (BCN, PMI)'
     });
     
     self.add (self.searchTextField);
