@@ -12,11 +12,9 @@ function DetailView() {
     self.add(table);
     // load table contents when a row has been clicked
     self.addEventListener('itemSelectedInMaster', function (e) {
-        network.getHotelDetails(e.code, function(response) {
-            network.getVenues(response.Latitude, response.Longitude, function(response) {
-                fsVenueSearchParser = new FSVenueSearchParser (response);
-                table.data = fsVenueSearchParser.tableItems;
-            });
+        network.getVenues(e.latitude, e.longitude, function(response) {
+            fsVenueSearchParser = new FSVenueSearchParser (response);
+            table.data = fsVenueSearchParser.tableItems;
         });
     });
     

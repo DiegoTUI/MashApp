@@ -90,6 +90,20 @@ var network = new function(){
         xhr.send();
     };
     
+    self.getHotelsMS = function (city, callback) {
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.onload = function() { 
+            callback(JSON.parse(xhr.responseText));
+        };
+        xhr.onerror = function() {
+            Ti.API.info("GetHotels. Error occurred");
+        };
+        var completeUrl = config.mashoopUrl + config.apiKey + '/ms-hotel-list?destination=' + city;
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
+        xhr.send();
+    };
+    
     return self;
 };
 

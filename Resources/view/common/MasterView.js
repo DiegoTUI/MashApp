@@ -2,7 +2,7 @@
 function MasterView() {
     // requires
     var network = require('util/network');
-    var ATHotelListParser = require('model/ATHotelListParser');
+    var MSHotelListParser = require('model/MSHotelListParser');
 	//create object instance, parasitic subclass of Observable
 	var self = Ti.UI.createView({
 		backgroundColor:'white'
@@ -21,11 +21,11 @@ function MasterView() {
     searchView.searchButton.addEventListener ('click', function (e){
         Ti.API.debug('text field: ' + searchView.searchTextField.value);
         // load table contents
-        network.getHotels(searchView.searchTextField.value, function(response) {
+        network.getHotelsMS(searchView.searchTextField.value, function(response) {
             Ti.API.debug('response received. Parsing...');
-            var atHotelListParser = new ATHotelListParser(response);
+            var msHotelListParser = new MSHotelListParser(response);
             Ti.API.debug('parsing complete. Painting...');
-            table.data = atHotelListParser.tableItems.slice(0,49);
+            table.data = msHotelListParser.tableItems;
             Ti.API.debug('results painted');
         });
     });
