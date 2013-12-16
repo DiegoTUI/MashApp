@@ -11,10 +11,12 @@ function VenueView() {
     self.add(lbl);
     
     self.addEventListener('itemSelectedInDetails', function(e) {
+            var keys = ['distance', 'contact', 'rating', 'location', 'categories', 'hereNow', 'stats'];
             lbl.text = "name: " + e.title + "\n";
-            for (var key in e) {
-            	lbl.text = lbl.text + key + ": " + JSON.stringify(e[key], null, "\t") + "\n";
-            }
+            lbl.text = lbl.text + "source: " + e.source + "\n";
+            keys.forEach(function(key) {
+                lbl.text = e[key] == undefined ? lbl.text : lbl.text + key + ": " + JSON.stringify(e[key], null, 4) + "\n";
+            });
     });
     
     return self;
