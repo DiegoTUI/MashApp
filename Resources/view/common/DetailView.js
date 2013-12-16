@@ -2,7 +2,7 @@
 function DetailView() {
 	// requires
     var network = require('util/network');
-    var FSVenueSearchParser = require('model/FSVenueSearchParser');
+    var MSVenuesParser = require('model/MSVenuesParser');
     //create object instance, parasitic subclass of Observable
     var self = Ti.UI.createView({
         backgroundColor:'white'
@@ -12,9 +12,9 @@ function DetailView() {
     self.add(table);
     // load table contents when a row has been clicked
     self.addEventListener('itemSelectedInMaster', function (e) {
-        network.getVenues(e.latitude, e.longitude, function(response) {
-            fsVenueSearchParser = new FSVenueSearchParser (response);
-            table.data = fsVenueSearchParser.tableItems;
+        network.getMashoopVenues(e.latitude, e.longitude, function(response) {
+            var msVenuesParser = new MSVenuesParser (response);
+            table.data = msVenuesParser.tableItems;
         });
     });
     

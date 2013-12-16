@@ -11,11 +11,10 @@ function VenueView() {
     self.add(lbl);
     
     self.addEventListener('itemSelectedInDetails', function(e) {
-            lbl.text = "name: " + e.title + "\n" +
-             "contact: " + JSON.stringify(e.contact, null, "\t") + "\n" +
-             "location: " + JSON.stringify(e.location, null, "\t") + "\n" +
-             "categories: " + JSON.stringify(e.categories, null, "\t") + "\n" +
-             "stats: " + JSON.stringify(e.stats, null, "\t");
+            lbl.text = "name: " + e.title + "\n";
+            for (var key in e) {
+            	lbl.text = lbl.text + key + ": " + JSON.stringify(e[key], null, "\t") + "\n";
+            }
     });
     
     return self;

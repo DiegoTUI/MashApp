@@ -5,8 +5,8 @@ var network = new function(){
     // requires
     var config = require('config.js');
     var Position = require('util/Position');
-    //get venues
-    self.getVenues = function(latitude, longitude, callback){
+    //get foursquare venues
+    self.getFoursquareVenues = function(latitude, longitude, callback){
     	if (config.useLocalResponse) {
     		var response = require('server/response.js').fsVenueSearchResponse;
     		callback (response);
@@ -18,9 +18,39 @@ var network = new function(){
             callback(JSON.parse(xhr.responseText));
         };
         xhr.onerror = function() {
-            Ti.API.info("GetVenues. Error occurred");
+            Ti.API.info("GetFoursquareVenues. Error occurred");
         };
         var completeUrl = config.mashoopUrl + config.apiKey + '/fs-venue-search?ll=' + latitude + ',' + longitude;
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
+        xhr.send();
+    };
+    //get yelp venues
+    self.getYelpVenues = function(latitude, longitude, callback){
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.onload = function() {
+            //Ti.API.debug("GetVenues. Callback: " + xhr.responseText);
+            callback(JSON.parse(xhr.responseText));
+        };
+        xhr.onerror = function() {
+            Ti.API.info("GetYelpVenues. Error occurred");
+        };
+        var completeUrl = config.mashoopUrl + config.apiKey + '/yp-search?ll=' + latitude + ',' + longitude;
+        Ti.API.info("Opening connection: " + completeUrl);
+        xhr.open("GET", completeUrl);
+        xhr.send();
+    };
+    //get mashed up venues
+    self.getMashoopVenues = function(latitude, longitude, callback){
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.onload = function() {
+            //Ti.API.debug("GetVenues. Callback: " + xhr.responseText);
+            callback(JSON.parse(xhr.responseText));
+        };
+        xhr.onerror = function() {
+            Ti.API.info("GetMashoopVenues. Error occurred");
+        };
+        var completeUrl = config.mashoopUrl + config.apiKey + '/ms-venues?ll=' + latitude + ',' + longitude;
         Ti.API.info("Opening connection: " + completeUrl);
         xhr.open("GET", completeUrl);
         xhr.send();

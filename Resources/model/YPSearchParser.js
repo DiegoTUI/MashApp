@@ -1,5 +1,5 @@
-// FourSquare venue search parser
-var FSVenueSearchParser = function (response) {
+// Yelp search parser
+var YPSearchParser = function (response) {
 	// self reference
 	var self = this;
 	// the venues parsed
@@ -9,16 +9,16 @@ var FSVenueSearchParser = function (response) {
 		var parsedItems = [];
 		
 		if (isResponseValid()) {
-			response.venues.forEach (function (venue) {
+			response.businesses.forEach (function (venue) {
 				parsedItems.push ({title: venue.name,
-										source: 'foursquare',
-										hereNow: venue.hereNow,
+										source: 'yelp',
+										distance: venue.distance,
 										contact: venue.contact,
+										rating: venue.rating,
 										location: venue.location,
 										categories: venue.categories,
-										stats: venue.stats,
 										hasChild: true,
-										color: 'black'});
+										color: 'red'});
 			});
 		}
 		
@@ -27,15 +27,14 @@ var FSVenueSearchParser = function (response) {
 	// checks if the response is valid
 	function isResponseValid() {
 		var isValid = true;
-		if (typeof response['venues'] !== 'object' ||
-			response.venues.length == 0) {
+		if (typeof response['businesses'] !== 'object' ||
+			response.businesses.length == 0) {
 			isValid = false;
 		}
 		else {
-			response.venues.forEach (function (venue) {
-				if (venue['name'] == undefined ||
-					venue['hereNow'] == undefined ||
-					venue.hereNow['count'] == undefined) {
+			response.businesses.forEach (function (venue) {
+				if (venue['id'] == undefined ||
+					venue['name'] == undefined) {
 						isValid = false;
 						return;
 				}
@@ -47,4 +46,4 @@ var FSVenueSearchParser = function (response) {
 	return self;
 };
 
-module.exports = FSVenueSearchParser;
+module.exports = YPSearchParser;
